@@ -1,0 +1,25 @@
+﻿<Window x:Class="FlowerEvidence.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlowerEvidence"
+        Background="HotPink"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="300">
+    <Grid>
+        <ListView x:Name="LV" Height="350" Width="270">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add"/>
+                    <MenuItem Header="Edit"/>
+                    <MenuItem Header="Remove"/>
+                    <MenuItem Header="Detail"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+
+    </Grid>
+</Window>
