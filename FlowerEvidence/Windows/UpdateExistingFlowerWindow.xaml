@@ -10,8 +10,8 @@
         WindowStartupLocation="CenterOwner"
         Title="UpdateExistingFlowerWindow" Height="300" Width="300">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="43,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="204"/>
-        <TextBox HorizontalAlignment="Left" Margin="43,89,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="204"/>
+        <TextBox HorizontalAlignment="Left" Margin="43,45,0,0" TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Top" Width="204"/>
+        <TextBox HorizontalAlignment="Left" Margin="43,89,0,0" TextWrapping="Wrap" Text="{Binding Genus, Mode=TwoWay}" VerticalAlignment="Top" Width="204"/>
         <ComboBox x:Name="ColorInput" HorizontalAlignment="Left" Margin="43,142,0,0" VerticalAlignment="Top" Width="204">
             <ComboBoxItem Content="Blue"/>
             <ComboBoxItem Content="Red"/>
@@ -21,6 +21,7 @@
             <ComboBoxItem Content="Orange"/>
             <ComboBoxItem Content="Black"/>
         </ComboBox>
+        <Button Content="Save" HorizontalAlignment="Center" Margin="0,222,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click"/>
 
     </Grid>
 </Window>

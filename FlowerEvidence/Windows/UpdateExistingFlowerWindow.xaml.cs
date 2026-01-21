@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FlowerEvidence.Interfaces;
+using FlowerEvidence.Models;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FlowerEvidence.Windows
 {
@@ -19,9 +9,23 @@ namespace FlowerEvidence.Windows
     /// </summary>
     public partial class UpdateExistingFlowerWindow : Window
     {
-        public UpdateExistingFlowerWindow()
+        public Flower Flower { get; set; }
+        private readonly IFlowerManager _manager;
+        public UpdateExistingFlowerWindow(Flower flower, IFlowerManager manager)
         {
+            Flower = flower;
+            _manager = manager;
             InitializeComponent();
+            DataContext = Flower;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string color = ColorInput.Text;
+            Flower.Color = color;
+            _manager.Update(Flower);            
+            DialogResult = true;
+            Close();
         }
     }
 }

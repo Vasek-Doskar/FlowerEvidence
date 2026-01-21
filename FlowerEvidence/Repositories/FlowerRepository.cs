@@ -28,6 +28,7 @@ namespace FlowerEvidence.Repositories
             }
             try
             {
+                _context.Entry(flower).State = EntityState.Detached;
                 _context.Remove(flower);
                 _context.SaveChanges();
             }

@@ -14,8 +14,8 @@ namespace FlowerEvidence
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<Flower> Data {  get; set; }
-        public IFlowerManager Manager {  get; set; }
+        ObservableCollection<Flower> Data { get; set; }
+        public IFlowerManager Manager { get; set; }
         public MainWindow()
         {
             IFlowerRepository repository = new FlowerRepository(new FlowerContext());
@@ -30,7 +30,7 @@ namespace FlowerEvidence
             AddNewFlowerWindow AddWindow = new(Manager);
             AddWindow.Owner = this; // jen pokud máte 2 monitory
             AddWindow.Closed += (s, e) => { Data.Add(AddWindow.NewFlower); };
-            AddWindow.ShowDialog();          
+            AddWindow.ShowDialog();
         }
 
         private void OnRemoveClick(object sender, RoutedEventArgs e)
@@ -43,6 +43,26 @@ namespace FlowerEvidence
             }
         }
 
-      
+        private void OnUpdateClick(object sender, RoutedEventArgs e)
+        {
+            Flower? flower = LV.SelectedItem as Flower;
+            if(flower != null)
+            {
+                UpdateExistingFlowerWindow updateWindow = new(flower, Manager);
+                updateWindow.Owner = this;
+                if(updateWindow.ShowDialog() == true)
+                {
+                    //int index = Data.IndexOf(flower);
+                    //Data[index] = Manager.GetById(flower.Id);
+
+                    Data = new ObservableCollection<Flower>(Manager.GetAll());
+                    LV.ItemsSource = Data;
+                }
+
+            }
+        }
+
+
+
     }
 }
