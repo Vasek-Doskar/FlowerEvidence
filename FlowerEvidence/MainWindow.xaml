@@ -13,9 +13,9 @@
         <ListView x:Name="LV" Height="350" Width="270">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add"/>
+                    <MenuItem Header="Add" Click="OnAddClick"/>
                     <MenuItem Header="Edit"/>
-                    <MenuItem Header="Remove"/>
+                    <MenuItem Header="Remove" Click="OnRemoveClick"/>
                     <MenuItem Header="Detail"/>
                 </ContextMenu>
             </ListView.ContextMenu>
