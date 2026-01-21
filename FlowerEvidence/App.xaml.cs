@@ -1,5 +1,10 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using FlowerEvidence.Database;
+using FlowerEvidence.Interfaces;
+using FlowerEvidence.Managers;
+using FlowerEvidence.Repositories;
+using FlowerEvidence.Windows;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace FlowerEvidence
@@ -9,6 +14,32 @@ namespace FlowerEvidence
     /// </summary>
     public partial class App : Application
     {
+        private IServiceProvider _serviceProvider;
+
+        public App()
+        {
+            IServiceCollection services = new ServiceCollection();
+
+            // zaregistrujeme si Databázi
+
+            services.AddDbContext<FlowerContext>(options =>
+            options.UseSqlite("Data Source=FlowerDb.db"),ServiceLifetime.Scoped);
+
+            services.AddScoped<IFlowerRepository, FlowerRepository>();
+            services.AddScoped<IFlowerManager, FlowerManager>();
+
+            services.AddTransient<MainWindow>();
+            services.AddTransient<AddNewFlowerWindow>();
+            services.AddTransient<UpdateExistingFlowerWindow>();
+
+            _serviceProvider = services.BuildServiceProvider();
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow main= _serviceProvider.GetService<MainWindow>();
+            main.Show();
+        }
     }
 
 }

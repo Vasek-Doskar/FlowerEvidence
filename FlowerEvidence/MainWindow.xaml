@@ -16,7 +16,6 @@
                     <MenuItem Header="Add" Click="OnAddClick"/>
                     <MenuItem Header="Edit" Click="OnUpdateClick"/>
                     <MenuItem Header="Remove" Click="OnRemoveClick"/>
-                    <MenuItem Header="Detail"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
