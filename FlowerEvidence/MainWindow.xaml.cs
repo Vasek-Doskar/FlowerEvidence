@@ -1,36 +1,35 @@
-﻿using FlowerEvidence.Database;
-using FlowerEvidence.Interfaces;
-using FlowerEvidence.Managers;
+﻿using FlowerEvidence.Interfaces;
 using FlowerEvidence.Models;
-using FlowerEvidence.Repositories;
 using FlowerEvidence.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace FlowerEvidence
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly IServiceProvider _serviceProvider;
         ObservableCollection<Flower> Data { get; set; }
         public IFlowerManager Manager { get; set; }
-        public MainWindow()
+        private readonly IFlowerFactory _factory;
+        public MainWindow(IServiceProvider serviceProvider, IFlowerFactory factory)
         {
-            IFlowerRepository repository = new FlowerRepository(new FlowerContext());
-            Manager = new FlowerManager(repository);
+            _factory = factory;
+            _serviceProvider = serviceProvider;
+            var scope = _serviceProvider.CreateScope();
+            Manager = scope.ServiceProvider.GetRequiredService<IFlowerManager>();
+
             Data = new ObservableCollection<Flower>(Manager.GetAll());
             InitializeComponent();
-            LV.ItemsSource = Data;
+            LV.ItemsSource = Data;            
         }
 
         private void OnAddClick(object sender, RoutedEventArgs e)
         {
-            AddNewFlowerWindow AddWindow = new(Manager);
+            AddNewFlowerWindow AddWindow = _factory.CreateAddWindow();
             AddWindow.Owner = this; // jen pokud máte 2 monitory
-            AddWindow.Closed += (s, e) => { Data.Add(AddWindow.NewFlower); };
-            AddWindow.ShowDialog();
+            if(AddWindow.ShowDialog() == true) Data.Add(AddWindow.NewFlower);
         }
 
         private void OnRemoveClick(object sender, RoutedEventArgs e)
@@ -48,7 +47,7 @@ namespace FlowerEvidence
             Flower? flower = LV.SelectedItem as Flower;
             if(flower != null)
             {
-                UpdateExistingFlowerWindow updateWindow = new(flower, Manager);
+                UpdateExistingFlowerWindow updateWindow = _factory.CreateUpdateWindow(flower.Id);
                 updateWindow.Owner = this;
                 if(updateWindow.ShowDialog() == true)
                 {

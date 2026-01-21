@@ -23,6 +23,7 @@ namespace FlowerEvidence.Windows
             {
                 NewFlower = GetFlower();
                 _manager.Add(NewFlower);
+                DialogResult = true;
                 Close();
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using FlowerEvidence.Database;
+using FlowerEvidence.Factory;
 using FlowerEvidence.Interfaces;
 using FlowerEvidence.Managers;
 using FlowerEvidence.Repositories;
@@ -27,6 +28,7 @@ namespace FlowerEvidence
 
             services.AddScoped<IFlowerRepository, FlowerRepository>();
             services.AddScoped<IFlowerManager, FlowerManager>();
+            services.AddScoped<IFlowerFactory, FlowerFactory>();
 
             services.AddTransient<MainWindow>();
             services.AddTransient<AddNewFlowerWindow>();

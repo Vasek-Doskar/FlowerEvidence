@@ -1,5 +1,6 @@
 ﻿using FlowerEvidence.Interfaces;
 using FlowerEvidence.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace FlowerEvidence.Windows
@@ -11,10 +12,12 @@ namespace FlowerEvidence.Windows
     {
         public Flower Flower { get; set; }
         private readonly IFlowerManager _manager;
-        public UpdateExistingFlowerWindow(Flower flower, IFlowerManager manager)
+        private readonly IServiceProvider _serviceProvider;
+        public UpdateExistingFlowerWindow(int id, IServiceProvider provider)
         {
-            Flower = flower;
-            _manager = manager;
+            _serviceProvider = provider;
+            _manager = _serviceProvider.GetRequiredService<IFlowerManager>();
+            Flower = _manager.GetById(id);            
             InitializeComponent();
             DataContext = Flower;
         }
